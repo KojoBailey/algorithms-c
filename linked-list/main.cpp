@@ -4,6 +4,8 @@ template<typename T>
 struct Node {
 	T value{};
 	Node<T>* next{nullptr};
+
+	Node(T _value) : value(_value) {}
 };
 
 template<typename T>
@@ -19,15 +21,34 @@ public:
 
 	void append(T _value)
 	{
-		Node<T>* new_element = new Node<T>();
-		new_element->value = _value;
+		Node<T>* new_element = new Node<T>(_value);
 
 		if (start == nullptr) {
 			start = new_element;
 			end = start;
+			return;
+		}
+
+		end->next = new_element;
+		end = new_element;
+	}
+
+	void insert(T _value, size_t index)
+	{
+		Node<T>* new_element = new Node<T>(_value);
+
+		if (start == nullptr) {
+			start = new_element;
+			end = start;
+			return;
+		}
+
+		Node<T>* node_to_replace = this->get_node(index);
+		new_element->next = node_to_replace;
+		if (node_to_replace != start) {
+			this->get_node(index - 1)->next = new_element;
 		} else {
-			end->next = new_element;
-			end = new_element;
+			start = new_element;
 		}
 	}
 
@@ -53,12 +74,24 @@ public:
 private:
 	Node<T>* start{nullptr};
 	Node<T>* end{nullptr};
+
+	[[nodiscard]] Node<T>* get_node(size_t index)
+	{
+		Node<T>* target_node = start;
+		for (size_t i = 0; i < index; i++) {
+			target_node = target_node->next;
+		}
+		return target_node;
+	}
 };
 
 int main()
 {
 	LinkedList<int> list{5, 2, 7};
 	list.append(23);
+	list.insert(18, 1);
+	list.insert(19, 0);
+	list.insert(50, 10);
 	
 	for (int i = 0; i < list.length(); i++) {
 		printf("%d ", list[i]);
