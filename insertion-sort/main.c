@@ -37,7 +37,7 @@ void print_arr(char* name, int* arr, size_t size)
 int main(void)
 {
 	srand(time(NULL));
-	int arr[10];
+	int arr[1000];
 	size_t arr_size = sizeof(arr) / sizeof(int);
 
 	printf("arr = { ");
