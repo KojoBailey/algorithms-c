@@ -52,6 +52,20 @@ public:
 		}
 	}
 
+	T remove(size_t index)
+	{
+		Node<T>* node_to_remove = this->get_node(index);
+		T result = node_to_remove->value;
+		Node<T>* next_node = node_to_remove->next;
+		if (index != 0) {
+			this->get_node(index - 1)->next = next_node;
+		} else {
+			start = next_node;
+		}
+		delete node_to_remove;
+		return result;
+	}
+
 	[[nodiscard]] T operator[](size_t index)
 	{
 		Node<T>* target_node = start;
@@ -85,15 +99,24 @@ private:
 	}
 };
 
+template<typename T>
+void print_list(LinkedList<T>& list)
+{
+	for (int i = 0; i < list.length(); i++) {
+		std::cout << list[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
 int main()
 {
 	LinkedList<int> list{5, 2, 7};
 	list.append(23);
 	list.insert(18, 1);
 	list.insert(19, 0);
-	list.insert(50, 10);
-	
-	for (int i = 0; i < list.length(); i++) {
-		printf("%d ", list[i]);
-	}
+	print_list(list);
+	list.remove(3);
+	print_list(list);
+	list.remove(0);
+	print_list(list);
 }
