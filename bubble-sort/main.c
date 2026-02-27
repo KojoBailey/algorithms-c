@@ -11,13 +11,6 @@ void swap(int* a, int* b)
 	*a ^= *b;
 }
 
-void print_arr(int* arr, size_t length)
-{
-	for (size_t i = 0; i < length; i++) {
-		printf("%d ", arr[i]);
-	}
-}
-
 void bubble_sort(int* arr, size_t length)
 {
 	size_t i, j;
