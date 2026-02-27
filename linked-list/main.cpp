@@ -8,6 +8,7 @@ struct Node {
 	Node(T _value) : value(_value) {}
 };
 
+// [TODO] Handle out-of-index safely.
 template<typename T>
 class LinkedList {
 public:
